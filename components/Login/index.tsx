@@ -1,4 +1,5 @@
 import Button from "components/Forms/Button";
+import Section from "layouts/Section";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaEye, FaEyeSlash, FaUnlock, FaUser } from "react-icons/fa";
@@ -17,7 +18,7 @@ const Login: FC = () => {
   };
 
   return (
-    <section className="flex-col bg-white min-h-[100vh] px-[2.5rem] pt-[3rem]">
+    <Section>
       <form autoComplete="off" onSubmit={handleSubmit(onValid)}>
         <h1 className="text-[1.75rem] font-bold mb-[4rem]">회원 로그인</h1>
         <div className="space-y-[2rem]">
@@ -104,7 +105,7 @@ const Login: FC = () => {
           </button>
         </div>
       </form>
-    </section>
+    </Section>
   );
 };
 
