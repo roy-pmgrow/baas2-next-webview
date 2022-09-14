@@ -8,13 +8,20 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import { LoginForm } from "types/forms/login";
 
 const Login: FC = () => {
-  const [isShowing, setIsShowing] = useState<boolean>(false);
+  const [isShow, setIsShow] = useState<boolean>(false);
   const { register, watch, setValue, handleSubmit } = useForm<LoginForm>({
     mode: "onChange",
+    defaultValues: {
+      loginId: "",
+      password: "",
+      saved: false,
+      keeped: false,
+    },
   });
 
   const onValid = (data: LoginForm) => {
     console.log(data);
+    alert(data);
   };
 
   return (
@@ -24,10 +31,12 @@ const Login: FC = () => {
         <div className="space-y-[2rem]">
           <div className="flex items-center pb-[1rem] w-full border-b">
             <FaUser
-              className={`text-[1.2rem] ${watch("loginId") === "" ? "text-slate-500" : "text-black"}`}
+              className={`min-w-[1.2rem] text-[1.2rem] ${
+                watch("loginId") === "" ? "text-slate-500" : "text-black"
+              }`}
             />
             <input
-              {...register("loginId", { value: "" })}
+              {...register("loginId", { required: true })}
               className="w-full mx-[1rem] outline-none"
               placeholder="이메일 (예: account@domain.com)"
             />
@@ -40,25 +49,27 @@ const Login: FC = () => {
           </div>
           <div className="flex items-center pb-[1rem] w-full border-b">
             <FaUnlock
-              className={`text-[1.2rem] ${watch("password") === "" ? "text-slate-500" : "text-black"}`}
+              className={`min-w-[1.2rem] text-[1.2rem] ${
+                watch("password") === "" ? "text-slate-500" : "text-black"
+              }`}
             />
             <input
-              {...register("password", { value: "" })}
-              type={`${isShowing ? "text" : "password"}`}
+              {...register("password", { required: true })}
+              type={`${isShow ? "text" : "password"}`}
               className="w-full mx-[1rem] outline-none"
               placeholder="패스워드"
               autoComplete="new-password"
             />
             <div className={`${!watch("password") && "hidden"}`}>
-              {isShowing ? (
+              {isShow ? (
                 <FaEyeSlash
                   className="text-[1.5rem] cursor-pointer text-gray-400 mr-[1rem]"
-                  onClick={() => setIsShowing(false)}
+                  onClick={() => setIsShow(false)}
                 />
               ) : (
                 <FaEye
                   className="text-[1.5rem] cursor-pointer text-gray-400 mr-[1rem]"
-                  onClick={() => setIsShowing(true)}
+                  onClick={() => setIsShow(true)}
                 />
               )}
             </div>
@@ -95,7 +106,9 @@ const Login: FC = () => {
           </div>
         </div>
         <div className="mt-[4rem]">
-          <Button disabled={!watch("loginId") || !watch("password")}>회원 로그인</Button>
+          <Button type="submit" disabled={!watch("loginId") || !watch("password")}>
+            회원 로그인
+          </Button>
         </div>
         <div className="flex justify-between mt-[1rem]">
           <button className="text-[0.75rem] text-gray-500">아이디 • 패스워드 찾기</button>
