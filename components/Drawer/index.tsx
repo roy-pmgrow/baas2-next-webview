@@ -31,7 +31,7 @@ const Drawer: FC<Props> = ({ onClick }) => {
 
   return (
     <aside className="relative z-10">
-      <div className="fixed bg-black opacity-30 w-full h-full top-0 left-0"></div>
+      <div className="fixed bg-black opacity-40 w-full h-full top-0 left-0"></div>
       <div
         className={`fixed h-screen p-4 overflow-y-auto bg-white w-[19rem] top-0 right-0 transform ease-in-out transition-all duration-300 
       ${isOpen ? "translate-x-0" : "translate-x-full"}`}
