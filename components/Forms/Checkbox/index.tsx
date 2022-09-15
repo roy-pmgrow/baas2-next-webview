@@ -9,11 +9,17 @@ interface Props {
 
 const CheckBox: FC<Props> = ({ id, classNames, children, register, watch, ...rest }) => {
   return (
-    <div className={`select-none flex items-center ${classNames}`}>
-      <input {...register} {...rest} id={`${id}-checkbox`} type="checkbox" className="w-4 h-4" />
+    <div className={`flex items-center select-none ${classNames}`}>
+      <input
+        {...register}
+        {...rest}
+        id={`${id}-checkbox`}
+        type="checkbox"
+        className="w-4 h-4 bg-transparent border-gray-400 text-blue-500 focus:ring-blue-200"
+      />
       <label
         htmlFor={`${id}-checkbox`}
-        className={`ml-[0.5rem] text-sm font-medium cursor-pointer  
+        className={`ml-[0.5rem] text-sm font-medium cursor-pointer
         ${watch ? "text-black" : "text-slate-500"}`}
       >
         {children}
