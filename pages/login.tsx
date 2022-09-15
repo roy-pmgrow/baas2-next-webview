@@ -1,5 +1,5 @@
-import Button from "components/Forms/Button";
 import CheckBox from "components/Forms/Checkbox";
+import DisabledButton from "components/Forms/DisabledButton";
 import Input from "components/Forms/Input";
 import Section from "layouts/Section";
 import { NextPage } from "next";
@@ -53,9 +53,9 @@ const LoginPage: NextPage = () => {
           </CheckBox>
         </div>
         <div className="mt-[4rem]">
-          <Button type="submit" disabled={!watch("loginId") || !watch("password")}>
+          <DisabledButton type="submit" disabled={!watch("loginId") || !watch("password")}>
             회원 로그인
-          </Button>
+          </DisabledButton>
         </div>
         <div className="flex justify-between mt-[1rem]">
           <button className="text-[0.75rem] text-gray-500">아이디 • 패스워드 찾기</button>
