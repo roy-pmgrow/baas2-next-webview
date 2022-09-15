@@ -6,7 +6,7 @@ interface Props {
   [key: string]: any;
 }
 
-const Button: FC<Props> = ({ children, disabled = true, rest }) => {
+const Button: FC<Props> = ({ children, disabled = true, ...rest }) => {
   console.log(disabled);
   return (
     <button

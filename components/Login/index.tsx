@@ -1,9 +1,8 @@
 import Button from "components/Forms/Button";
+import Input from "components/Forms/Input";
 import Section from "layouts/Section";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash, FaUnlock, FaUser } from "react-icons/fa";
-import { IoMdCloseCircle } from "react-icons/io";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { LoginForm } from "types/forms/login";
 
@@ -29,7 +28,23 @@ const Login: FC = () => {
       <form autoComplete="off" onSubmit={handleSubmit(onValid)}>
         <h1 className="text-[1.75rem] font-bold mb-[4rem]">회원 로그인</h1>
         <div className="space-y-[2rem]">
-          <div className="flex items-center pb-[1rem] w-full border-b">
+          <Input
+            type="text"
+            register={register("loginId", { required: true })}
+            watch={watch("loginId")}
+            onClick={() => setValue("loginId", "")}
+            icon="user"
+            placeholder="이메일 (예: account@domain.com)"
+          />
+          <Input
+            type={`${isShow ? "text" : "password"}`}
+            register={register("password", { required: true })}
+            watch={watch("password")}
+            onClick={() => setValue("password", "")}
+            icon="password"
+            placeholder="패스워드"
+          />
+          {/* <div className="flex items-center pb-[1rem] w-full border-b">
             <FaUser
               className={`min-w-[1.2rem] text-[1.2rem] ${
                 watch("loginId") === "" ? "text-slate-500" : "text-black"
@@ -79,7 +94,7 @@ const Login: FC = () => {
                 onClick={() => setValue("password", "")}
               />
             )}
-          </div>
+          </div> */}
         </div>
         <div className="flex pt-[2rem]">
           <div className="flex items-center mr-[2rem]">
