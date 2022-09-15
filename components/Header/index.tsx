@@ -24,7 +24,10 @@ const Header = () => {
           {pathname === "/" ? (
             <Image src="/images/logo.png" alt="로고" width={60} height={24} />
           ) : (
-            <HiArrowLeft className="text-[1.3rem]" onClick={back} />
+            <div className="flex space-x-[0.5rem] items-center">
+              <HiArrowLeft className="text-[1.3rem]" onClick={back} />
+              {/* <h1 className="text-xl font-bold">회원가입</h1> */}
+            </div>
           )}
           <FiMenu className="text-[1.3rem]" role="button" onClick={handleToggleDrawer} />
         </div>
