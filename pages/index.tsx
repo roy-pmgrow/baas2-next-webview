@@ -3,6 +3,7 @@ import { ContentType, swiperContents } from "data";
 import Section from "layouts/Section";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { Pagination } from "swiper";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -36,6 +37,8 @@ const Home: NextPage = () => {
         slidesPerView={1}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
+        pagination={true}
+        modules={[Pagination]}
       >
         {swiperContents.map(({ title, description }: ContentType, index) => (
           <SwiperSlide key={index}>
