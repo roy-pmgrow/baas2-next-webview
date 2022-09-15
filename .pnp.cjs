@@ -74,6 +74,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-query", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:3.39.2"],\
             ["swiper", "npm:8.3.2"],\
             ["tailwindcss", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:3.1.8"],\
+            ["tailwindcss-safe-area", "npm:0.2.2"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=a1c5e5"]\
           ],\
           "linkType": "SOFT"\
@@ -1564,6 +1565,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["react-query", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:3.39.2"],\
             ["swiper", "npm:8.3.2"],\
             ["tailwindcss", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:3.1.8"],\
+            ["tailwindcss-safe-area", "npm:0.2.2"],\
             ["typescript", "patch:typescript@npm%3A4.7.4#~builtin<compat/typescript>::version=4.7.4&hash=a1c5e5"]\
           ],\
           "linkType": "SOFT"\
@@ -6049,6 +6051,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packagePeers": [\
             "@types/postcss",\
             "postcss"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["tailwindcss-safe-area", [\
+        ["npm:0.2.2", {\
+          "packageLocation": "./.yarn/cache/tailwindcss-safe-area-npm-0.2.2-ce2f998b80-2ac21e3c6c.zip/node_modules/tailwindcss-safe-area/",\
+          "packageDependencies": [\
+            ["tailwindcss-safe-area", "npm:0.2.2"]\
           ],\
           "linkType": "HARD"\
         }]\

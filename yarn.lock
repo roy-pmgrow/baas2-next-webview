@@ -1197,6 +1197,7 @@ __metadata:
     react-query: ^3.39.0
     swiper: ^8.3.2
     tailwindcss: ^3.1.8
+    tailwindcss-safe-area: ^0.2.2
     typescript: 4.7.4
   languageName: unknown
   linkType: soft
@@ -4855,6 +4856,13 @@ __metadata:
     dom7: ^4.0.4
     ssr-window: ^4.0.2
   checksum: 881d8e4fdedc391593c9ecee1ca0fddaebd16b2f6be493f80869fbaf848761cf7e41a7d7ba4b9fe4c4d61e9bef87ba33154d22bb6a8a8503c22c49f793bef1c1
+  languageName: node
+  linkType: hard
+
+"tailwindcss-safe-area@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "tailwindcss-safe-area@npm:0.2.2"
+  checksum: 2ac21e3c6cb080f94f2d22d1b04cbadab504cc3960197e6f83cebbe05c0792bcfeeaedcad2d3f48354479edfa12aa4b4ab1f526aafeacd9c36ec974c4faecf72
   languageName: node
   linkType: hard
 

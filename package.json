@@ -56,6 +56,7 @@
     "husky": "^8.0.0",
     "lint-staged": "^13.0.3",
     "lodash.clonedeep": "^4.5.0",
+    "tailwindcss-safe-area": "^0.2.2",
     "typescript": "4.7.4"
   },
   "packageManager": "yarn@3.2.3",
