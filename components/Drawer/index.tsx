@@ -30,10 +30,10 @@ const Drawer: FC<Props> = ({ onClick }) => {
   }, []);
 
   return (
-    <aside>
-      <div className="fixed z-30 bg-black opacity-30 w-full h-full left-0 top-0"></div>
+    <section>
+      <div className="fixed bg-black opacity-30 w-full h-full top-0 left-0"></div>
       <div
-        className={`fixed z-40 h-screen p-4 overflow-y-auto bg-white w-[19rem] top-0 right-0 transform ease-in-out transition-all duration-300 
+        className={`fixed h-screen p-4 overflow-y-auto bg-white w-[19rem] top-0 right-0 transform ease-in-out transition-all duration-300 
       ${isOpen ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="flex flex-col h-full justify-between">
@@ -67,7 +67,7 @@ const Drawer: FC<Props> = ({ onClick }) => {
           <span className="text-gray-500">서비스 이용약관 • 개인정보 처리방침</span>
         </div>
       </div>
-    </aside>
+    </section>
   );
 };
 

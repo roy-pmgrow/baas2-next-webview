@@ -15,20 +15,22 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0">
-      <div
-        className={`flex justify-between bg-white p-[1rem] 
+    <>
+      <header className="sticky top-0">
+        <div
+          className={`flex justify-between bg-white p-[1rem] 
         ${scrollPosition >= 20 && "shadow"} `}
-      >
-        {pathname === "/" ? (
-          <Image src="/images/logo.png" alt="로고" width={60} height={24} />
-        ) : (
-          <HiArrowLeft className="text-[1.3rem]" onClick={back} />
-        )}
-        <FiMenu className="text-[1.3rem]" role="button" onClick={handleToggleDrawer} />
-        <div className="absolute">{showDrawer && <Drawer onClick={handleToggleDrawer} />}</div>
-      </div>
-    </header>
+        >
+          {pathname === "/" ? (
+            <Image src="/images/logo.png" alt="로고" width={60} height={24} />
+          ) : (
+            <HiArrowLeft className="text-[1.3rem]" onClick={back} />
+          )}
+          <FiMenu className="text-[1.3rem]" role="button" onClick={handleToggleDrawer} />
+        </div>
+      </header>
+      <aside className="absolute z-10">{showDrawer && <Drawer onClick={handleToggleDrawer} />}</aside>
+    </>
   );
 };
 
