@@ -35,6 +35,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@heroicons/react", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:1.0.6"],\
             ["@next/eslint-plugin-next", "npm:12.3.0"],\
+            ["@tailwindcss/forms", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:0.5.3"],\
             ["@types/lodash.clonedeep", "npm:4.5.7"],\
             ["@types/node", "npm:18.6.5"],\
             ["@types/react", "npm:18.0.17"],\
@@ -623,6 +624,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@szmarczak/http-timer", "npm:4.0.6"],\
             ["defer-to-connect", "npm:2.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@tailwindcss/forms", [\
+        ["npm:0.5.3", {\
+          "packageLocation": "./.yarn/cache/@tailwindcss-forms-npm-0.5.3-4d75c0dfda-9eddb4dbd0.zip/node_modules/@tailwindcss/forms/",\
+          "packageDependencies": [\
+            ["@tailwindcss/forms", "npm:0.5.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:0.5.3", {\
+          "packageLocation": "./.yarn/__virtual__/@tailwindcss-forms-virtual-15cf06d139/0/cache/@tailwindcss-forms-npm-0.5.3-4d75c0dfda-9eddb4dbd0.zip/node_modules/@tailwindcss/forms/",\
+          "packageDependencies": [\
+            ["@tailwindcss/forms", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:0.5.3"],\
+            ["@types/tailwindcss", null],\
+            ["mini-svg-data-uri", "npm:1.4.4"],\
+            ["tailwindcss", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:3.1.8"]\
+          ],\
+          "packagePeers": [\
+            "@types/tailwindcss",\
+            "tailwindcss"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -1501,6 +1525,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["baas2-next-webview", "workspace:."],\
             ["@heroicons/react", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:1.0.6"],\
             ["@next/eslint-plugin-next", "npm:12.3.0"],\
+            ["@tailwindcss/forms", "virtual:1d013cf5b08b6d0b933867c691b1b0d1d8eb22ee441183462ada1142722b6f448367777a9f84c993b9fd92ababd3876dda70269ac3155f0c5dcd0fdfe8f24780#npm:0.5.3"],\
             ["@types/lodash.clonedeep", "npm:4.5.7"],\
             ["@types/node", "npm:18.6.5"],\
             ["@types/react", "npm:18.0.17"],\
@@ -4330,6 +4355,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mimic-response-npm-3.1.0-a4a24b4e96-25739fee32.zip/node_modules/mimic-response/",\
           "packageDependencies": [\
             ["mimic-response", "npm:3.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["mini-svg-data-uri", [\
+        ["npm:1.4.4", {\
+          "packageLocation": "./.yarn/cache/mini-svg-data-uri-npm-1.4.4-929f6f1119-997f1fbd8d.zip/node_modules/mini-svg-data-uri/",\
+          "packageDependencies": [\
+            ["mini-svg-data-uri", "npm:1.4.4"]\
           ],\
           "linkType": "HARD"\
         }]\
