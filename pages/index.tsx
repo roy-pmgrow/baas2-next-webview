@@ -1,6 +1,10 @@
+import Button from "components/Forms/Button";
+import { ContentType, swiperContents } from "data";
 import Section from "layouts/Section";
 import type { NextPage } from "next";
 import Link from "next/link";
+import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const Home: NextPage = () => {
   return (
@@ -26,6 +30,27 @@ const Home: NextPage = () => {
           <a className="border-blue-500 border w-full text-blue-500 py-[0.4rem] text-center">회원가입</a>
         </Link>
       </div>
+      <Swiper
+        className="mt-[2rem]"
+        spaceBetween={50}
+        slidesPerView={1}
+        onSlideChange={() => console.log("slide change")}
+        onSwiper={(swiper) => console.log(swiper)}
+      >
+        {swiperContents.map(({ title, description }: ContentType, index) => (
+          <SwiperSlide key={index}>
+            <article>
+              <div className="w-full h-[10rem] bg-slate-300">&nbsp;</div>
+              <h2 className="text-[1.3rem] font-bold mt-[1rem]" dangerouslySetInnerHTML={{ __html: title }} />
+              <h3
+                className="text-[0.9rem] text-gray-500 mb-[1rem]"
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
+              <Button disabled={false}>바로가기</Button>
+            </article>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </Section>
   );
 };
