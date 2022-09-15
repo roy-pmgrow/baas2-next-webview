@@ -1,9 +1,11 @@
+import BottomButton from "components/Forms/BottomButton";
 import CheckBox from "components/Forms/Checkbox";
 import Input from "components/Forms/Input";
 import Section from "layouts/Section";
 import { NextPage } from "next";
 import Head from "next/head";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
+import regex from "regex";
 import { SignUpForm } from "types/forms/signup";
 
 const SignupPage: NextPage = () => {
@@ -22,12 +24,16 @@ const SignupPage: NextPage = () => {
     console.log(data);
   };
 
+  const onInvalid = (errors: FieldErrors) => {
+    console.log(errors);
+  };
+
   return (
     <Section>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
       </Head>
-      <form autoComplete="off" onSubmit={handleSubmit(onValid)}>
+      <form autoComplete="off" onSubmit={handleSubmit(onValid, onInvalid)}>
         <h1 className="text-3xl font-bold mb-[0.5rem]">회원가입</h1>
         <h3 className="text-sm text-gray-500 mb-[4rem]">
           이용 약관 동의 및 가입 정보 입력 후 즉시 가입 가능합니다.
@@ -42,7 +48,13 @@ const SignupPage: NextPage = () => {
             placeholder="이메일 (예: account@domain.com)"
           />
           <Input
-            register={register("password", { required: true })}
+            register={register("password", {
+              required: true,
+              pattern: {
+                value: regex.password,
+                message: "패스워드는 특수문자 포함 8~16자리 입력해주세요.",
+              },
+            })}
             watch={watch("password")}
             onClick={() => setValue("password", "")}
             icon="password"
@@ -69,12 +81,7 @@ const SignupPage: NextPage = () => {
           <span className="text-gray-400 text-sm">* 수신 동의 시 차량 맞춤형 정보를 얻으실 수 있습니다.</span>
         </div>
 
-        <div className="fixed left-0 bottom-[env(safe-area-inset-bottom)] pb-safe w-full z-10">
-          <button className="w-full min-h-[3rem] bg-blue-500 text-white font-bold">가입 신청</button>
-        </div>
-        <div className="fixed left-0 bottom-0 pb-safe w-full">
-          <button className="w-full min-h-[2rem] bg-blue-500" />
-        </div>
+        <BottomButton type="submit">가입 신청</BottomButton>
       </form>
     </Section>
   );
