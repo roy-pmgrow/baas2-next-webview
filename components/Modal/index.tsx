@@ -43,10 +43,10 @@ const Modal: FC = () => {
 
   return modal.message !== "" && ref.current && mounted
     ? createPortal(
-        <div className="fixed top-0 left-0 max-w-lg h-full z-10">
+        <div className="fixed top-0 left-0 max-w-lg h-full z-10 select-none">
           <div className="opacity-40 bg-black w-full h-full fixed z-20"></div>
           <div className="flex items-center w-full h-full fixed z-30">
-            <div className="flex flex-col w-full">
+            <div className="flex flex-col w-full relative z-[999]">
               <div className="bg-white mx-auto w-[85%] p-10 rounded-lg space-y-[1rem] text-center">
                 <span className="text-center">{modal.message}</span>
                 <button

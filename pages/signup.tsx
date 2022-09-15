@@ -1,14 +1,21 @@
+import userApi from "apis/user";
 import BottomButton from "components/Forms/BottomButton";
 import CheckBox from "components/Forms/Checkbox";
 import Input from "components/Forms/Input";
+import { useAtom } from "jotai";
 import Section from "layouts/Section";
+import cloneDeep from "lodash.clonedeep";
 import { NextPage } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { FieldErrors, useForm } from "react-hook-form";
 import regex from "regex";
+import { modalAtom } from "store";
 import { SignUpForm } from "types/forms/signup";
 
 const SignupPage: NextPage = () => {
+  const { replace } = useRouter();
+  const [modal, setModal] = useAtom(modalAtom);
   const { register, watch, setValue, handleSubmit } = useForm<SignUpForm>({
     mode: "onChange",
     defaultValues: {
@@ -20,12 +27,27 @@ const SignupPage: NextPage = () => {
     },
   });
 
+  const signup = async ({ loginId, password }: SignUpForm) => {
+    try {
+      await userApi.signup(loginId, password);
+      modal.message = "회원가입을 완료하였습니다";
+      setModal(cloneDeep(modal));
+      replace("/");
+    } catch (error) {
+      modal.message = error as string;
+      setModal(cloneDeep(modal));
+    }
+  };
+
   const onValid = (data: SignUpForm) => {
-    console.log(data);
+    signup(data);
   };
 
   const onInvalid = (errors: FieldErrors) => {
-    console.log(errors);
+    if (errors["loginId"]) modal.message = errors["loginId"]?.message as string;
+    else if (errors["password"]) modal.message = errors["password"]?.message as string;
+    else if (errors["confirmPassword"]) modal.message = errors["confirmPassword"]?.message as string;
+    setModal(cloneDeep(modal));
   };
 
   return (
@@ -40,8 +62,8 @@ const SignupPage: NextPage = () => {
         </h3>
         <div className="space-y-[2rem] px-[0.5rem]">
           <Input
-            type="text"
-            register={register("loginId", { required: true })}
+            type="email"
+            register={register("loginId", { required: "이메일을 입력해주세요." })}
             watch={watch("loginId")}
             onClick={() => setValue("loginId", "")}
             icon="user"
@@ -49,7 +71,7 @@ const SignupPage: NextPage = () => {
           />
           <Input
             register={register("password", {
-              required: true,
+              required: "비밀번호를 입력해주세요",
               pattern: {
                 value: regex.password,
                 message: "패스워드는 특수문자 포함 8~16자리 입력해주세요.",
@@ -61,7 +83,12 @@ const SignupPage: NextPage = () => {
             placeholder="패스워드 (특수문자 포함 8~16자리)"
           />
           <Input
-            register={register("confirmPassword", { required: true })}
+            register={register("confirmPassword", {
+              required: "비밀번호 확인을 입력해주세요.",
+              validate: {
+                checkPassword: (value) => value === watch("password") || "비밀번호가 일치하지 않습니다.",
+              },
+            })}
             watch={watch("confirmPassword")}
             onClick={() => setValue("confirmPassword", "")}
             icon="password"

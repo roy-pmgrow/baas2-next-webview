@@ -64,7 +64,11 @@ const Drawer: FC<Props> = ({ onClick }) => {
               </li>
             ))}
           </ul>
-          <span className="text-gray-500 text-sm">서비스 이용약관 • 개인정보 처리방침</span>
+          {localStorage.token ? (
+            <span className="text-gray-500 text-sm">로그아웃</span>
+          ) : (
+            <span className="text-gray-500 text-sm">서비스 이용약관 • 개인정보 처리방침</span>
+          )}
         </div>
       </div>
     </aside>

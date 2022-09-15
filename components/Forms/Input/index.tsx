@@ -25,7 +25,7 @@ const Input: FC<Props> = ({ icon, register, watch, onClick, ...rest }) => {
       <input
         {...register}
         {...rest}
-        type={`${icon !== "password" ? "text" : isShow ? "text" : "password"}`}
+        type={`${icon !== "password" ? "email" : isShow ? "text" : "password"}`}
         className="w-full mx-[0.5rem] outline-none border-transparent focus:border-transparent focus:ring-0"
         autoComplete="new-password"
       />
