@@ -1,7 +1,7 @@
 import { httpRequest } from "./../httpRequest";
 const userApi = {
   login(loginId: string, password: string, saved: boolean, keeped: boolean) {
-    return httpRequest.post("/api/login", {
+    return httpRequest.post("/app/auth/login", {
       data: {
         user_id: loginId,
         user_pw: password,

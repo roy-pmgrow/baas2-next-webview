@@ -1,14 +1,23 @@
+import userApi from "apis/user";
 import CheckBox from "components/Forms/Checkbox";
 import DisabledButton from "components/Forms/DisabledButton";
 import Input from "components/Forms/Input";
+import { useAtom } from "jotai";
+import jwtDecode from "jwt-decode";
 import Section from "layouts/Section";
+import cloneDeep from "lodash.clonedeep";
 import { NextPage } from "next";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import { FieldErrors, useForm } from "react-hook-form";
 import { RiArrowRightSLine } from "react-icons/ri";
+import { modalAtom, userAtom } from "store";
 import { LoginForm } from "types/forms/login";
 
 const LoginPage: NextPage = () => {
+  const { replace } = useRouter();
+  const [modal, setModal] = useAtom(modalAtom);
+  const [user, setUser] = useAtom(userAtom);
   const { register, watch, setValue, handleSubmit } = useForm<LoginForm>({
     mode: "onChange",
     defaultValues: {
@@ -19,25 +28,46 @@ const LoginPage: NextPage = () => {
     },
   });
 
+  const login = async ({ loginId, password, saved, keeped }: LoginForm) => {
+    try {
+      const { token } = await userApi.login(loginId, password, saved, keeped);
+      const decoded = jwtDecode(token) as any;
+      user.token = token;
+      user.userId = decoded.user_id;
+      setUser(cloneDeep(user));
+      localStorage.setItem("token", token);
+      replace("/main");
+    } catch (error) {
+      modal.message = error as string;
+      setModal(cloneDeep(modal));
+    }
+  };
+
   const onValid = (data: LoginForm) => {
-    console.log(data);
+    login(data);
+  };
+
+  const onInvalid = (errors: FieldErrors) => {
+    console.log(errors);
   };
 
   return (
     <Section>
-      <form autoComplete="off" onSubmit={handleSubmit(onValid)}>
+      <form autoComplete="off" onSubmit={handleSubmit(onValid, onInvalid)}>
         <h1 className="text-3xl font-bold mb-[4rem]">회원 로그인</h1>
         <div className="space-y-[2rem] px-[0.5rem]">
           <Input
-            type="text"
-            register={register("loginId", { required: true })}
+            type="email"
+            register={register("loginId", { required: "이메일을 입력해주세요." })}
             watch={watch("loginId")}
             onClick={() => setValue("loginId", "")}
             icon="user"
             placeholder="이메일 (예: account@domain.com)"
           />
           <Input
-            register={register("password", { required: true })}
+            register={register("password", {
+              required: "비밀번호를 입력해주세요",
+            })}
             watch={watch("password")}
             onClick={() => setValue("password", "")}
             icon="password"
