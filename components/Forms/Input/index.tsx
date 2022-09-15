@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { FaUnlock, FaUser } from "react-icons/fa";
+import { FC, useState } from "react";
+import { FaEye, FaEyeSlash, FaUnlock, FaUser } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 
 interface Props {
@@ -8,6 +8,8 @@ interface Props {
 }
 
 const Input: FC<Props> = ({ icon, register, watch, onClick, ...rest }) => {
+  const [isShow, setIsShow] = useState<boolean>(false);
+
   return (
     <div className="flex items-center pb-[1rem] w-full border-b">
       {icon === "user" && (
@@ -20,7 +22,28 @@ const Input: FC<Props> = ({ icon, register, watch, onClick, ...rest }) => {
           className={`min-w-[1.2rem] text-[1.2rem] ${watch === "" ? "text-slate-500" : "text-black"}`}
         />
       )}
-      <input {...rest} {...register} className="w-full mx-[1rem] outline-none" />
+      <input
+        {...register}
+        {...rest}
+        type={`${icon !== "password" ? "text" : isShow ? "text" : "password"}`}
+        className="w-full mx-[1rem] outline-none"
+        autoComplete="new-password"
+      />
+      {icon === "password" && (
+        <div className={`${!watch && "hidden"}`}>
+          {isShow ? (
+            <FaEyeSlash
+              className="text-[1.5rem] cursor-pointer text-gray-400 mr-[1rem]"
+              onClick={() => setIsShow(false)}
+            />
+          ) : (
+            <FaEye
+              className="text-[1.5rem] cursor-pointer text-gray-400 mr-[1rem]"
+              onClick={() => setIsShow(true)}
+            />
+          )}
+        </div>
+      )}
       {watch && <IoMdCloseCircle className="text-[1.5rem] cursor-pointer text-gray-500" onClick={onClick} />}
     </div>
   );

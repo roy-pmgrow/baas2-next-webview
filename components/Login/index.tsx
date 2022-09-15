@@ -1,13 +1,12 @@
 import Button from "components/Forms/Button";
 import Input from "components/Forms/Input";
 import Section from "layouts/Section";
-import { FC, useState } from "react";
+import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { RiArrowRightSLine } from "react-icons/ri";
 import { LoginForm } from "types/forms/login";
 
 const Login: FC = () => {
-  const [isShow, setIsShow] = useState<boolean>(false);
   const { register, watch, setValue, handleSubmit } = useForm<LoginForm>({
     mode: "onChange",
     defaultValues: {
@@ -37,7 +36,6 @@ const Login: FC = () => {
             placeholder="이메일 (예: account@domain.com)"
           />
           <Input
-            type={`${isShow ? "text" : "password"}`}
             register={register("password", { required: true })}
             watch={watch("password")}
             onClick={() => setValue("password", "")}
