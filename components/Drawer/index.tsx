@@ -30,7 +30,7 @@ const Drawer: FC<Props> = ({ onClick }) => {
   }, []);
 
   return (
-    <section>
+    <aside className="relative z-10">
       <div className="fixed bg-black opacity-30 w-full h-full top-0 left-0"></div>
       <div
         className={`fixed h-screen p-4 overflow-y-auto bg-white w-[19rem] top-0 right-0 transform ease-in-out transition-all duration-300 
@@ -64,10 +64,10 @@ const Drawer: FC<Props> = ({ onClick }) => {
               </li>
             ))}
           </ul>
-          <span className="text-gray-500">서비스 이용약관 • 개인정보 처리방침</span>
+          <span className="text-gray-500 text-sm">서비스 이용약관 • 개인정보 처리방침</span>
         </div>
       </div>
-    </section>
+    </aside>
   );
 };
 

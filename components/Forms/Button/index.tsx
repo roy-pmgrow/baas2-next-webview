@@ -7,7 +7,6 @@ interface Props {
 }
 
 const Button: FC<Props> = ({ children, disabled = true, ...rest }) => {
-  console.log(disabled);
   return (
     <button
       className={`w-full h-[3.5rem] rounded-md font-medium text-[1.1rem] ${

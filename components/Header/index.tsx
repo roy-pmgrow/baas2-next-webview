@@ -29,7 +29,7 @@ const Header = () => {
           <FiMenu className="text-[1.3rem]" role="button" onClick={handleToggleDrawer} />
         </div>
       </header>
-      <aside className="absolute z-10">{showDrawer && <Drawer onClick={handleToggleDrawer} />}</aside>
+      {showDrawer && <Drawer onClick={handleToggleDrawer} />}
     </>
   );
 };
