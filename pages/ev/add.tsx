@@ -39,7 +39,6 @@ const EVAdd: NextPage = () => {
     if (filterData) setEvCar(filterData[0]);
   }, [filterData]);
 
-  console.log(ev.model.values);
   return (
     <Section>
       <div className="flex space-x-[0.5rem]">
