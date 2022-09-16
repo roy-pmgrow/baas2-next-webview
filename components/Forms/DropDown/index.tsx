@@ -2,12 +2,13 @@ import BackDrop from "components/BackDrop";
 import { FC, useState } from "react";
 
 interface Props {
+  activeIndex: number;
   current: string;
   list: string[];
   onClick: (name: string, index: number) => void;
 }
 
-const DropDown: FC<Props> = ({ current, list, onClick }) => {
+const DropDown: FC<Props> = ({ activeIndex, current, list, onClick }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleToggle = () => setIsOpen(!isOpen);
 
@@ -15,13 +16,13 @@ const DropDown: FC<Props> = ({ current, list, onClick }) => {
     <>
       <button
         data-dropdown-toggle="dropdown"
-        className="relative bg-white border-gray-300 border font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+        className="relative bg-white border-gray-300 border font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex items-center"
         type="button"
         onClick={handleToggle}
       >
-        {current}
+        {current.split("(")[0]}
         <svg
-          className="ml-2 w-4 h-4"
+          className="ml-1 w-4 h-4"
           aria-hidden="true"
           fill="none"
           stroke="currentColor"
@@ -33,13 +34,15 @@ const DropDown: FC<Props> = ({ current, list, onClick }) => {
         {isOpen && (
           <div
             id="dropdown"
-            className="absolute left-0 top-[2.7rem] z-30 w-max bg-white rounded-lg divide-y divide-gray-100 shadow select-none cursor-pointer"
+            className="absolute left-0 top-[2.7rem] z-30 w-max bg-white rounded-lg divide-y divide-gray-100 text-sm shadow select-none cursor-pointer"
           >
             <ul className="py-1 text-sm text-left">
               {list.map((name, index) => (
                 <li
                   key={index}
-                  className="py-2 px-4 hover:bg-gray-100"
+                  className={`py-2 px-4 hover:bg-gray-100 ${
+                    activeIndex === index && "text-blue-500 font-bold"
+                  }`}
                   onClick={() => {
                     onClick(name, index);
                     handleToggle();
