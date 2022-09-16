@@ -10,6 +10,13 @@ const userApi = {
       },
     });
   },
+  logout(loginId: string) {
+    return httpRequest.post("/app/auth/logout", {
+      data: {
+        user_id: loginId, //
+      },
+    });
+  },
   signup(loginId: string, password: string) {
     return httpRequest.post("/app/user/regUser", {
       data: {

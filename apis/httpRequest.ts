@@ -1,9 +1,12 @@
 const getHeader = () => {
-  return {
+  let headers: { [key: string]: string } = {
     "Content-Type": "application/json",
     "data-type": "json",
-    // "Authorization": `Bearer ${localStorage.token}`,
   };
+  const token = location.pathname === "/login" || location.pathname === "/signup" ? null : localStorage.token;
+  if (token) headers["token"] = token;
+
+  return headers;
 };
 
 // helper functions
