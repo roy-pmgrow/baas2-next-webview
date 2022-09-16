@@ -33,7 +33,7 @@ const LoginPage: NextPage = () => {
       const { token } = await userApi.login(loginId, password, saved, keeped);
       const decoded = jwtDecode(token) as any;
       user.token = token;
-      user.userId = decoded.user_id;
+      user.loginId = decoded.user_id;
       setUser(cloneDeep(user));
       localStorage.setItem("token", token);
       replace("/main");

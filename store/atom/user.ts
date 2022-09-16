@@ -1,9 +1,9 @@
 export interface UserAtom {
-  userId: string;
+  loginId: string;
   token: string;
 }
 
 export const user: UserAtom = {
-  userId: "",
+  loginId: "",
   token: "",
 };
