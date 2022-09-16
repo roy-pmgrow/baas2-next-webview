@@ -1,38 +1,25 @@
 import BackDrop from "components/BackDrop";
-import { useAtom } from "jotai";
-import cloneDeep from "lodash.clonedeep";
-import { FC, useEffect, useState } from "react";
-import { evAtom } from "store";
+import { FC, useState } from "react";
 
 interface Props {
+  current: string;
   list: string[];
+  onClick: (name: string, index: number) => void;
 }
 
-const DropDown: FC<Props> = ({ list }) => {
-  const [ev, setEv] = useAtom(evAtom);
+const DropDown: FC<Props> = ({ current, list, onClick }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const handleToggle = () => setIsOpen(!isOpen);
-  const handleSelected = (name: string) => {
-    ev.currentManufacturer = name;
-    setEv(cloneDeep(ev));
-    handleToggle();
-  };
-
-  useEffect(() => {
-    ev.currentManufacturer = list[0];
-    setEv(cloneDeep(ev));
-  }, []);
 
   return (
     <>
       <button
-        id="dropdownDefault"
         data-dropdown-toggle="dropdown"
-        className="bg-white border-gray-300 border font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
+        className="relative bg-white border-gray-300 border font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center"
         type="button"
         onClick={handleToggle}
       >
-        {ev.currentManufacturer}
+        {current}
         <svg
           className="ml-2 w-4 h-4"
           aria-hidden="true"
@@ -43,21 +30,28 @@ const DropDown: FC<Props> = ({ list }) => {
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
         </svg>
+        {isOpen && (
+          <div
+            id="dropdown"
+            className="absolute left-0 top-[2.7rem] z-30 w-max bg-white rounded-lg divide-y divide-gray-100 shadow select-none cursor-pointer"
+          >
+            <ul className="py-1 text-sm text-left">
+              {list.map((name, index) => (
+                <li
+                  key={index}
+                  className="py-2 px-4 hover:bg-gray-100"
+                  onClick={() => {
+                    onClick(name, index);
+                    handleToggle();
+                  }}
+                >
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </button>
-      {isOpen && (
-        <div
-          id="dropdown"
-          className="relative z-30 w-max bg-white rounded-lg divide-y divide-gray-100 shadow select-none cursor-pointer"
-        >
-          <ul className="py-1 text-sm" aria-labelledby="dropdownDefault">
-            {list.map((name, index) => (
-              <li key={index} className="py-2 px-4 hover:bg-gray-100" onClick={() => handleSelected(name)}>
-                {name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
       {isOpen && <BackDrop handleEvent={handleToggle} />}
     </>
   );

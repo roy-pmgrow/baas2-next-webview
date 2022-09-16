@@ -6,10 +6,10 @@ interface Props {
   [key: string]: any;
 }
 
-const Button: FC<Props> = ({ className, children, ...rest }) => {
+const Button: FC<Props> = ({ className = "bg-blue-500", children, ...rest }) => {
   return (
     <button
-      className={`w-full h-[3.5rem] rounded-md font-medium text-[1.1rem] bg-blue-500 text-white ${className}`}
+      className={`w-full h-[3.5rem] rounded-md font-medium text-[1.1rem] text-white ${className}`}
       {...rest}
     >
       {children}
