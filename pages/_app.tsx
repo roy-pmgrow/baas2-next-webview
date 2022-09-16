@@ -1,3 +1,4 @@
+import DefaultDataSet from "components/DefaultDataSet";
 import Header from "components/Header";
 import Modal from "components/Modal";
 import { Provider } from "jotai";
@@ -31,6 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <ReactQueryDevtools initialIsOpen={true} />
         <div className="w-full max-w-lg mx-auto bg-white">
+          <DefaultDataSet />
           <Header />
           <Component {...pageProps} />
           <Modal />
