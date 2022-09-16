@@ -4,7 +4,6 @@ import Section from "layouts/Section";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { Pagination } from "swiper";
-import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const Home: NextPage = () => {

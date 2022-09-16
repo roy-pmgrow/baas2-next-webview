@@ -1,6 +1,7 @@
 import Header from "components/Header";
 import Modal from "components/Modal";
 import type { AppProps } from "next/app";
+import "swiper/css";
 import "swiper/css/bundle";
 import "swiper/css/pagination";
 import "../styles/globals.css";
