@@ -8,11 +8,11 @@ const nextConfig = {
   images: {
     // loader: "akamai",
     // path: "/",
-    // domains: ["openweathermap.org"],
+    domains: ["evplay.test.evmon.io"],
   },
   async rewrites() {
     return [
-      {
+    {
         source: "/app/:path*",
         destination: `${process.env.NEXT_PUBLIC_API_URL}/app/:path*`,
       },
