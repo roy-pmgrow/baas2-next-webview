@@ -85,7 +85,7 @@ const EVAdd: NextPage = () => {
                 src={`${process.env.NEXT_PUBLIC_API_URL}/${ev_img}`}
                 alt={ev_detl_model}
                 layout="fill"
-                className="rounded-lg border select-none"
+                className="rounded-lg select-none"
               />
             </div>
           </SwiperSlide>
