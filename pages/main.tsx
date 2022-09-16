@@ -1,11 +1,17 @@
 import Button from "components/Forms/Button";
 import Section from "layouts/Section";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 import { FaPlus } from "react-icons/fa";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const MainPage: NextPage = () => {
+  const { push } = useRouter();
+  const handleAdd = () => {
+    push("/ev/add");
+  };
+
   return (
     <Section>
       <div>
@@ -20,7 +26,7 @@ const MainPage: NextPage = () => {
         pagination={true}
         modules={[Pagination]}
       >
-        <SwiperSlide>
+        <SwiperSlide className="cursor-pointer" onClick={handleAdd}>
           <div className="w-full h-[15rem] bg-slate-200 rounded-lg flex flex-col justify-center items-center">
             <FaPlus className="text-[3rem] text-gray-500 mb-[1rem]" />
             <h3 className="text-gray-500">차량을 선택해주세요.</h3>

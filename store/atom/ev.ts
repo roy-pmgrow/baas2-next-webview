@@ -1,9 +1,21 @@
 export interface EvAtom {
-  currentManufacturer: string;
-  manufacturers: string[];
+  manufacturer: {
+    current: string;
+    values: string[];
+  };
+  model: {
+    current: string;
+    values: string[];
+  };
 }
 
 export const ev: EvAtom = {
-  currentManufacturer: "",
-  manufacturers: ["기아", "르노삼성", "벤츠"],
+  manufacturer: {
+    current: "기아",
+    values: ["기아", "르노삼성", "벤츠"],
+  },
+  model: {
+    current: "",
+    values: [],
+  },
 };
