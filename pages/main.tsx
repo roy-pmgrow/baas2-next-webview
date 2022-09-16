@@ -23,11 +23,14 @@ const MainPage: NextPage = () => {
         slidesPerView={1}
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
-        pagination={true}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
         modules={[Pagination]}
       >
         <SwiperSlide className="cursor-pointer" onClick={handleAdd}>
-          <div className="w-full h-[15rem] bg-slate-200 rounded-lg flex flex-col justify-center items-center">
+          <div className="aspect-video bg-slate-200 rounded-lg flex flex-col justify-center items-center">
             <FaPlus className="text-[3rem] text-gray-500 mb-[1rem]" />
             <h3 className="text-gray-500">차량을 선택해주세요.</h3>
           </div>
@@ -38,8 +41,8 @@ const MainPage: NextPage = () => {
         <input className="p-3 bg-gray-100 rounded-lg" placeholder="도착지 검색" />
       </div>
       <div className="flex space-x-[1rem] mt-[3rem]">
-        <Button>자동 모의주행</Button>
-        <Button className="bg-teal-500">시뮬레이션</Button>
+        <Button className="bg-amber-500">자동 모의주행</Button>
+        <Button>시뮬레이션</Button>
       </div>
     </Section>
   );

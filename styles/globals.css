@@ -20,6 +20,7 @@
   transition: width 0.2s;
   background: #ccc;
   opacity: 1;
+  user-select: none;
 }
 .swiper-pagination-bullet-active {
   width: 40px;
@@ -27,4 +28,5 @@
   border-radius: 5px;
   background: #3b82f6;
   border: 1px solid transparent;
+  user-select: none;
 }
