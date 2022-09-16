@@ -6,6 +6,9 @@
   body {
     @apply bg-[#aaa];
   }
+  input {
+    @apply outline-none border-transparent focus:border-transparent focus:ring-0;
+  }
 }
 
 .swiper-wrapper {
