@@ -1,6 +1,6 @@
 import { httpRequest } from "./../httpRequest";
 const userApi = {
-  // 로그인
+  /** 로그인 */
   login(loginId: string, password: string, saved: boolean, keeped: boolean) {
     return httpRequest.post("/app/auth/login", {
       data: {
@@ -11,7 +11,7 @@ const userApi = {
       },
     });
   },
-  // 로그아웃
+  /** 로그아웃 */
   logout(loginId: string) {
     return httpRequest.post("/app/auth/logout", {
       data: {
@@ -19,7 +19,7 @@ const userApi = {
       },
     });
   },
-  // 회원가입
+  /** 회원가입 */
   signup(loginId: string, password: string) {
     return httpRequest.post("/app/user/regUser", {
       data: {
@@ -28,7 +28,7 @@ const userApi = {
       },
     });
   },
-  // 아이디 중복체크
+  /** 아이디 중복체크 */
   idCheck(loginId: string) {
     return httpRequest.post("/app/auth/idCheck", {
       data: {

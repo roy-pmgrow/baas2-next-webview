@@ -7,11 +7,11 @@ export const enum MyCarOptions {
 }
 
 const evApi = {
-  // EV 차량 조회
+  /** EV 차량 조회 */
   list() {
     return httpRequest.post("/app/manage/getEvList", {});
   },
-  // 나의 EV 차량 조회
+  /** 나의 EV 차량 조회 */
   myList(loginId: string) {
     return httpRequest.post("/app/user/getMyEvList", {
       data: {
@@ -19,7 +19,7 @@ const evApi = {
       },
     });
   },
-  // 나의 EV 차량 등록/수정/삭제
+  /** 나의 EV 차량 등록/수정/삭제 */
   myCar(loginId: string, evId: string, type: MyCarOptions) {
     return httpRequest.post("/app/user/getMyEvList", {
       data: {
