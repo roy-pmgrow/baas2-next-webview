@@ -1,16 +1,20 @@
 import Button from "components/Forms/Button";
+import SearchResult from "components/SearchResult";
 import useQueryMyEvList from "hooks/queries/useQueryMyEvList";
 import Section from "layouts/Section";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { AddressForm } from "types/forms/address";
 import { ResponseEV } from "types/response";
 
 const MainPage: NextPage = () => {
+  const { register, watch, handleSubmit } = useForm<AddressForm>({ mode: "onChange" });
   const { push } = useRouter();
   const { isLoading, data } = useQueryMyEvList();
   const handleAdd = () => {
@@ -62,10 +66,15 @@ const MainPage: NextPage = () => {
           </div>
         </SwiperSlide>
       </Swiper>
-      <div className="flex flex-col space-y-[1.5rem]">
-        <input className="p-3 bg-gray-100 rounded-lg" placeholder="출발지 검색" />
-        <input className="p-3 bg-gray-100 rounded-lg" placeholder="도착지 검색" />
-      </div>
+      <article className="flex flex-col space-y-[1rem]">
+        <input
+          {...register("startAddress")}
+          className="p-3 bg-gray-100 rounded-lg"
+          placeholder="출발지 검색"
+        />
+        <SearchResult />
+        <input {...register("endAddress")} className="p-3 bg-gray-100 rounded-lg" placeholder="도착지 검색" />
+      </article>
       <div className="flex space-x-[1rem] mt-[3rem]">
         <Button className="bg-amber-500">자동 모의주행</Button>
         <Button>시뮬레이션</Button>
