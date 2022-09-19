@@ -12,9 +12,13 @@ const nextConfig = {
   },
   async rewrites() {
     return [
-    {
+      {
         source: "/app/:path*",
         destination: `${process.env.NEXT_PUBLIC_API_URL}/app/:path*`,
+      },
+      {
+        source: "/addrlink/:path*",
+        destination: `${process.env.NEXT_PUBLIC_ADDRESS_API_URL}/addrlink/:path*`,
       },
     ];
   },
