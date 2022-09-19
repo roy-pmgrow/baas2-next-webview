@@ -8,7 +8,7 @@ const DefaultDataSet = () => {
   const [user, setUser] = useAtom(userAtom);
 
   useEffect(() => {
-    if (localStorage.token) {
+    if (localStorage && localStorage.token) {
       const decoded = jwtDecode(localStorage.token) as any;
       user.token = localStorage.token;
       user.loginId = decoded.user_id;
