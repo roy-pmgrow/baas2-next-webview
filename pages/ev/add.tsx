@@ -1,4 +1,5 @@
 /* eslint-disable react/jsx-no-undef */
+import evApi, { MyCarOptions } from "apis/ev";
 import Button from "components/Forms/Button";
 import DropDown from "components/Forms/DropDown";
 import useQueryEvList from "hooks/queries/useQueryEvList";
@@ -7,15 +8,19 @@ import Section from "layouts/Section";
 import cloneDeep from "lodash.clonedeep";
 import { NextPage } from "next";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { evAtom } from "store";
+import { evAtom, userAtom } from "store";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { ResponseEV } from "types/response";
 
 const EVAdd: NextPage = () => {
+  const { replace } = useRouter();
+
+  const [user] = useAtom(userAtom);
   const [ev, setEv] = useAtom(evAtom);
-  const { isLoading, data, filterData } = useQueryEvList();
+  const { filterData } = useQueryEvList();
   const [evCar, setEvCar] = useState<ResponseEV>();
   const [swiper, setSwiper] = useState<any>();
 
@@ -30,9 +35,16 @@ const EVAdd: NextPage = () => {
     ev.model.current = name;
     setEvCar(filterData[index]);
     ev.model.index = index;
-    ev.model.current = ev.model.values[index];
+    ev.model.current = ev.model.current;
     swiper.slideTo(index);
     setEv(cloneDeep(ev));
+  };
+
+  const handleSelected = () => {
+    evApi
+      .myCar(user.loginId, filterData[ev.model.index].ev_id, MyCarOptions.add)
+      .then((result) => replace("/main"))
+      .catch((err) => {});
   };
 
   useEffect(() => {
@@ -114,7 +126,7 @@ const EVAdd: NextPage = () => {
           <span className="w-full">{evCar?.bat_mnfct}</span>
         </div>
       </div>
-      <Button>선택하기</Button>
+      <Button onClick={handleSelected}>선택하기</Button>
     </Section>
   );
 };
