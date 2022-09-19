@@ -20,3 +20,8 @@ export interface ResponseEV {
   bat_mnfct: string;
   ev_img: string;
 }
+
+export interface ResponseAddress {
+  bdNm: string;
+  roadAddr: string;
+}
