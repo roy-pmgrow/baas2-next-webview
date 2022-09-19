@@ -32,18 +32,27 @@ const MainPage: NextPage = () => {
     push("/ev/add");
   };
 
-  useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
-
   const searchAddress = async (type: AddressType, keyword: string) => {
     const data = await addressApi.search(keyword);
     const filter = data.filter((item: ResponseAddress) => item.bdNm !== "");
     if (type === AddressType.start) setStartAddressData(filter);
     else if (type === AddressType.end) setEndAddressData(filter);
   };
+
+  const handleSimulatedDriving = () => {
+    addressApi
+      .kakaoNavi("127.016990589902, 37.2798597422117", "126.951315733584, 37.2226490713383")
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {});
+  };
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (!isSearch) {
@@ -144,7 +153,9 @@ const MainPage: NextPage = () => {
         )}
       </article>
       <div className="flex space-x-[1rem] mt-[3rem]">
-        <Button className="bg-amber-500">자동 모의주행</Button>
+        <Button className="bg-amber-500" onClick={handleSimulatedDriving}>
+          자동 모의주행
+        </Button>
         <Button>시뮬레이션</Button>
       </div>
     </Section>
