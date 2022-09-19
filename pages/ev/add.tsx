@@ -80,7 +80,7 @@ const EVAdd: NextPage = () => {
       >
         {filterData.map(({ ev_id, ev_detl_model, ev_img }: ResponseEV) => (
           <SwiperSlide key={ev_id} className="cursor-pointer">
-            <div className="aspect-video">
+            <div className="aspect-video max-w-full min-h-[12.5rem]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_API_URL}/${ev_img}`}
                 alt={ev_detl_model}

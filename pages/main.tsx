@@ -45,19 +45,18 @@ const MainPage: NextPage = () => {
               <span className="text-xs text-gray-500">
                 {ev_detl_model} ({m_mileage} km)
               </span>
-              <div className="relative aspect-video">
+              <div className="relative aspect-video max-w-full min-h-[12.5rem]">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_API_URL}/${ev_img}`}
                   alt={ev_detl_model}
+                  className="select-none"
                   layout="fill"
-                  className="rounded-lg border select-none"
                 />
               </div>
             </SwiperSlide>
           ))}
         <SwiperSlide className="cursor-pointer" onClick={handleAdd}>
-          <span></span>
-          <div className="aspect-video bg-slate-200 rounded-lg flex flex-col justify-center items-center">
+          <div className="aspect-video min-h-[12.5rem] bg-slate-200 rounded-lg flex flex-col justify-center items-center">
             <FaPlus className="text-[3rem] text-gray-500 mb-[1rem]" />
             <h3 className="text-gray-500">EV 차량을 선택해주세요.</h3>
           </div>
