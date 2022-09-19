@@ -1,5 +1,5 @@
 import Button from "components/Forms/Button";
-import SearchResult from "components/SearchResult";
+import Input from "components/Forms/Input";
 import useQueryMyEvList from "hooks/queries/useQueryMyEvList";
 import Section from "layouts/Section";
 import { NextPage } from "next";
@@ -14,7 +14,7 @@ import { AddressForm } from "types/forms/address";
 import { ResponseEV } from "types/response";
 
 const MainPage: NextPage = () => {
-  const { register, watch, handleSubmit } = useForm<AddressForm>({ mode: "onChange" });
+  const { register, watch, setValue, handleSubmit } = useForm<AddressForm>({ mode: "onChange" });
   const { push } = useRouter();
   const { isLoading, data } = useQueryMyEvList();
   const handleAdd = () => {
@@ -67,13 +67,19 @@ const MainPage: NextPage = () => {
         </SwiperSlide>
       </Swiper>
       <article className="flex flex-col space-y-[1rem]">
-        <input
-          {...register("startAddress")}
-          className="p-3 bg-gray-100 rounded-lg"
+        <Input
+          register={register("startAddress")}
+          watch={watch("startAddress")}
+          setValue={setValue}
           placeholder="출발지 검색"
         />
-        <SearchResult />
-        <input {...register("endAddress")} className="p-3 bg-gray-100 rounded-lg" placeholder="도착지 검색" />
+        {/* <SearchResult /> */}
+        <Input
+          register={register("endAddress")}
+          watch={watch("endAddress")}
+          setValue={setValue}
+          placeholder="도착지 검색"
+        />
       </article>
       <div className="flex space-x-[1rem] mt-[3rem]">
         <Button className="bg-amber-500">자동 모의주행</Button>

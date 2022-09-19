@@ -1,7 +1,7 @@
 import userApi from "apis/user";
 import CheckBox from "components/Forms/Checkbox";
 import DisabledButton from "components/Forms/DisabledButton";
-import Input from "components/Forms/Input";
+import IconInput from "components/Forms/IconInput";
 import { useAtom } from "jotai";
 import jwtDecode from "jwt-decode";
 import Section from "layouts/Section";
@@ -56,7 +56,7 @@ const LoginPage: NextPage = () => {
       <form autoComplete="off" onSubmit={handleSubmit(onValid, onInvalid)}>
         <h1 className="text-3xl font-bold mb-[4rem]">회원 로그인</h1>
         <div className="space-y-[2rem] px-[0.5rem]">
-          <Input
+          <IconInput
             type="email"
             register={register("loginId", { required: "이메일을 입력해주세요." })}
             watch={watch("loginId")}
@@ -64,7 +64,7 @@ const LoginPage: NextPage = () => {
             icon="user"
             placeholder="이메일 (예: account@domain.com)"
           />
-          <Input
+          <IconInput
             register={register("password", {
               required: "비밀번호를 입력해주세요",
             })}
