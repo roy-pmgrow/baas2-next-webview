@@ -2,11 +2,12 @@ import evApi from "apis/ev";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
-import { userAtom } from "store";
+import { evAtom, userAtom } from "store";
 
 const useQueryMyEvList = () => {
   const [user] = useAtom(userAtom);
-  const { isLoading, data } = useQuery(["myEvList"], () => evApi.myList(user.loginId), {
+  const [ev] = useAtom(evAtom);
+  const { isLoading, data } = useQuery(["myEvList", ev.refresh], () => evApi.myList(user.loginId), {
     enabled: user.loginId !== "",
   });
 

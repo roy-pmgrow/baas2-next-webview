@@ -9,6 +9,7 @@ export interface EvAtom {
     current: string;
     values: string[];
   };
+  refresh: Date;
 }
 
 export const ev: EvAtom = {
@@ -22,4 +23,5 @@ export const ev: EvAtom = {
     current: "",
     values: [],
   },
+  refresh: new Date(),
 };

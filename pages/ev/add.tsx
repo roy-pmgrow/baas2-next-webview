@@ -43,7 +43,11 @@ const EVAdd: NextPage = () => {
   const handleSelected = () => {
     evApi
       .myCar(user.loginId, filterData[ev.model.index].ev_id, MyCarOptions.add)
-      .then((result) => replace("/main"))
+      .then(() => {
+        ev.refresh = new Date();
+        setEv(cloneDeep(ev));
+        replace("/main");
+      })
       .catch((err) => {});
   };
 
