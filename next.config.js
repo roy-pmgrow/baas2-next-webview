@@ -20,6 +20,14 @@ const nextConfig = {
         source: "/addrlink/:path*",
         destination: `${process.env.NEXT_PUBLIC_ADDRESS_API_URL}/addrlink/:path*`,
       },
+      {
+        source: "/v1/:path*",
+        destination: `${process.env.NEXT_PUBLIC_KAKAO_NAVI_API_URL}/v1/:path*`,
+      },
+      {
+        source: "/v2/:path*",
+        destination: `${process.env.NEXT_PUBLIC_KAKAO_MAP_API_URL}/v2/:path*`,
+      },
     ];
   },
 };
