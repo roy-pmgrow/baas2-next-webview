@@ -1,7 +1,7 @@
 import userApi from "apis/user";
 import BottomButton from "components/Forms/BottomButton";
 import CheckBox from "components/Forms/Checkbox";
-import Input from "components/Forms/Input";
+import IconInput from "components/Forms/IconInput";
 import { useAtom } from "jotai";
 import Section from "layouts/Section";
 import cloneDeep from "lodash.clonedeep";
@@ -61,7 +61,7 @@ const SignupPage: NextPage = () => {
           이용 약관 동의 및 가입 정보 입력 후 즉시 가입 가능합니다.
         </h3>
         <div className="space-y-[2rem] px-[0.5rem]">
-          <Input
+          <IconInput
             type="email"
             register={register("loginId", { required: "이메일을 입력해주세요." })}
             watch={watch("loginId")}
@@ -69,7 +69,7 @@ const SignupPage: NextPage = () => {
             icon="user"
             placeholder="이메일 (예: account@domain.com)"
           />
-          <Input
+          <IconInput
             register={register("password", {
               required: "비밀번호를 입력해주세요",
               pattern: {
@@ -82,7 +82,7 @@ const SignupPage: NextPage = () => {
             icon="password"
             placeholder="패스워드 (특수문자 포함 8~16자리)"
           />
-          <Input
+          <IconInput
             register={register("confirmPassword", {
               required: "비밀번호 확인을 입력해주세요.",
               validate: {
