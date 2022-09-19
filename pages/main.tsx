@@ -1,3 +1,5 @@
+import addressApi from "apis/address";
+import AddressResult from "components/AddressResult";
 import Button from "components/Forms/Button";
 import Input from "components/Forms/Input";
 import useQueryMyEvList from "hooks/queries/useQueryMyEvList";
@@ -5,18 +7,27 @@ import Section from "layouts/Section";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { AddressForm } from "types/forms/address";
-import { ResponseEV } from "types/response";
+import { ResponseAddress } from "types/response";
+
+export const enum AddressType {
+  start = "Start",
+  end = "End",
+}
 
 const MainPage: NextPage = () => {
-  const { register, watch, setValue, handleSubmit } = useForm<AddressForm>({ mode: "onChange" });
+  const { register, watch, setValue, handleSubmit } = useForm<AddressForm>();
   const { push } = useRouter();
   const { isLoading, data } = useQueryMyEvList();
+  const [startAddressData, setStartAddressData] = useState<ResponseAddress[]>([]);
+  const [endAddressData, setEndAddressData] = useState<ResponseAddress[]>([]);
+  const [isSearch, setIsSeach] = useState<boolean>(false);
+
   const handleAdd = () => {
     push("/ev/add");
   };
@@ -26,6 +37,33 @@ const MainPage: NextPage = () => {
       console.log(data);
     }
   }, [data]);
+
+  const searchAddress = async (type: AddressType, keyword: string) => {
+    const data = await addressApi.search(keyword);
+    const filter = data.filter((item: ResponseAddress) => item.bdNm !== "");
+    if (type === AddressType.start) setStartAddressData(filter);
+    else if (type === AddressType.end) setEndAddressData(filter);
+  };
+
+  useEffect(() => {
+    if (!isSearch) {
+      // 2글자 이상인 경우
+      const keyword = watch("startAddress");
+      keyword.length >= 2 ? searchAddress(AddressType.start, keyword) : setStartAddressData([]);
+      setEndAddressData([]);
+    }
+    setIsSeach(false);
+  }, [watch("startAddress")]);
+
+  useEffect(() => {
+    if (!isSearch) {
+      // 2글자 이상인 경우
+      const keyword = watch("endAddress");
+      keyword.length >= 2 ? searchAddress(AddressType.end, keyword) : setEndAddressData([]);
+      setStartAddressData([]);
+    }
+    setIsSeach(false);
+  }, [watch("endAddress")]);
 
   return (
     <Section>
@@ -73,13 +111,36 @@ const MainPage: NextPage = () => {
           setValue={setValue}
           placeholder="출발지 검색"
         />
-        {/* <SearchResult /> */}
+        <input {...register("startRoadAddr")} className="hidden" />
+        {startAddressData.length > 0 && (
+          <AddressResult
+            data={startAddressData}
+            handleClick={({ bdNm, roadAddr }) => {
+              setValue("startAddress", bdNm);
+              setValue("startRoadAddr", roadAddr);
+              setStartAddressData([]);
+              setIsSeach(true);
+            }}
+          />
+        )}
         <Input
           register={register("endAddress")}
           watch={watch("endAddress")}
           setValue={setValue}
           placeholder="도착지 검색"
         />
+        <input {...register("endRoadAddr")} className="hidden" />
+        {endAddressData.length > 0 && (
+          <AddressResult
+            data={endAddressData}
+            handleClick={({ bdNm, roadAddr }) => {
+              setValue("endAddress", bdNm);
+              setValue("endRoadAddr", roadAddr);
+              setEndAddressData([]);
+              setIsSeach(true);
+            }}
+          />
+        )}
       </article>
       <div className="flex space-x-[1rem] mt-[3rem]">
         <Button className="bg-amber-500">자동 모의주행</Button>
