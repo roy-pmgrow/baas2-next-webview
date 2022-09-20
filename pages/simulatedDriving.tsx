@@ -1,42 +1,55 @@
 import addressApi from "apis/address";
+import { useAtom } from "jotai";
 import Section from "layouts/Section";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import { Map, MapMarker, Polyline } from "react-kakao-maps-sdk";
-import { KakaoNaviRoads } from "types/response/kakaonavi";
+import { appAtom } from "store";
 
 const SimulatedDrivingPage: NextPage = () => {
+  const [app] = useAtom(appAtom);
   const [naviData, setNaviData] = useState([]);
+
+  const getKakaoNavi = async () => {
+    const origin = `${app.source.location.lat}, ${app.source.location.lng}`;
+    const destination = `${app.destination.location.lat}, ${app.destination.location.lng}`;
+    console.log(origin, destination);
+
+    const data = await addressApi.kakaoNavi(origin, destination);
+    console.log(data);
+  };
+
   useEffect(() => {
-    const data: any = [];
-    addressApi
-      .kakaoNavi("127.016990589902, 37.2798597422117", "127.11377087536, 37.1575880574755")
-      .then(({ routes }) => {
-        const { sections } = routes[0];
-        const { roads } = sections[0];
-        console.log(roads);
-        roads.map(({ distance, duration, traffic_speed, traffic_state, vertexes }: KakaoNaviRoads) => {
-          const points = [];
-          for (let i = 0; i < vertexes.length; i += 2) {
-            const point = {
-              lng: vertexes[i],
-              lat: vertexes[i + 1],
-            };
-            points.push(point);
-          }
-          const road = {
-            distance,
-            duration,
-            traffic_speed,
-            traffic_state,
-            points,
-          };
-          data.push(road);
-        });
-        setNaviData(data);
-        console.log(naviData);
-      })
-      .catch((err) => {});
+    getKakaoNavi();
+    // const data: any = [];
+    // addressApi
+    //   .kakaoNavi("127.016990589902, 37.2798597422117", "127.11377087536, 37.1575880574755")
+    //   .then(({ routes }) => {
+    //     const { sections } = routes[0];
+    //     const { roads } = sections[0];
+    //     console.log(roads);
+    //     roads.map(({ distance, duration, traffic_speed, traffic_state, vertexes }: KakaoNaviRoads) => {
+    //       const points = [];
+    //       for (let i = 0; i < vertexes.length; i += 2) {
+    //         const point = {
+    //           lng: vertexes[i],
+    //           lat: vertexes[i + 1],
+    //         };
+    //         points.push(point);
+    //       }
+    //       const road = {
+    //         distance,
+    //         duration,
+    //         traffic_speed,
+    //         traffic_state,
+    //         points,
+    //       };
+    //       data.push(road);
+    //     });
+    //     setNaviData(data);
+    //     console.log(naviData);
+    //   })
+    //   .catch((err) => {});
   }, []);
 
   return (
@@ -55,7 +68,7 @@ const SimulatedDrivingPage: NextPage = () => {
           mapTypeId={1}
         >
           <MapMarker
-            position={{ lat: 37.2798597422117, lng: 127.016990589902 }}
+            position={{ lat: app.source.location.lat, lng: app.source.location.lng }}
             image={{
               src: "/images/map/marker-source.png",
               size: {
@@ -65,7 +78,7 @@ const SimulatedDrivingPage: NextPage = () => {
             }}
           />
           <MapMarker
-            position={{ lat: 37.1575880574755, lng: 127.11377087536 }}
+            position={{ lat: app.destination.location.lat, lng: app.destination.location.lng }}
             image={{
               src: "/images/map/marker-destination.png",
               size: {
