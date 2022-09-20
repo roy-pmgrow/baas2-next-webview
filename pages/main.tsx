@@ -9,7 +9,7 @@ import cloneDeep from "lodash.clonedeep";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
 import { appAtom } from "store";
@@ -21,7 +21,9 @@ import { ResponseAddress, ResponseEV } from "types/response";
 
 const MainPage: NextPage = () => {
   const [app, setApp] = useAtom(appAtom);
-  const { register, watch, setValue } = useForm<AddressForm>();
+  const { register, watch, setValue } = useForm<AddressForm>({
+    mode: "onChange",
+  });
   const { push } = useRouter();
   const { data } = useQueryMyEvList();
   const [sources, setSources] = useState<ResponseAddress[]>([]);
@@ -38,15 +40,14 @@ const MainPage: NextPage = () => {
       return;
     }
 
-    const data = await addressApi.search(keyword);
+    const data = await addressApi.kakaoMap(keyword);
     if (data) {
-      const filter = data.filter(({ bdNm }: ResponseAddress) => bdNm !== "");
       if (type === AddressType.source) {
-        setSources(filter);
+        setSources(data.documents);
         setDestinations([]);
       } else if (type === AddressType.destination) {
         setSources([]);
-        setDestinations(filter);
+        setDestinations(data.documents);
       }
     }
   };
@@ -55,13 +56,17 @@ const MainPage: NextPage = () => {
     push("/simulatedDriving");
   };
 
-  const handleChangeInput = (type: AddressType, event: ChangeEvent<HTMLInputElement>) => {
-    searchAddress(type, event.currentTarget.value);
-  };
+  useEffect(() => {
+    if (app.source.isSearch) searchAddress(AddressType.source, watch("source"));
+  }, [watch("source")]);
 
   useEffect(() => {
-    setValue("source", app.source.bdNm);
-    setValue("destination", app.destination.bdNm);
+    if (app.destination.isSearch) searchAddress(AddressType.destination, watch("destination"));
+  }, [watch("destination")]);
+
+  useEffect(() => {
+    setValue("source", app.source.name);
+    setValue("destination", app.destination.name);
   }, []);
 
   return (
@@ -106,43 +111,42 @@ const MainPage: NextPage = () => {
       </Swiper>
       <article className="flex flex-col space-y-[1rem]">
         <Input
-          type={AddressType.source}
           register={register("source")}
           watch={watch("source")}
-          setValue={setValue}
           placeholder="출발지 검색"
-          onChange={(event: ChangeEvent<HTMLInputElement>) => handleChangeInput(AddressType.source, event)}
+          onFocus={() => (app.source.isSearch = true)}
+          onClear={() => {
+            app.source = { ...app.source, name: "", address: "", location: { lat: 0, lng: 0 } };
+            setApp(cloneDeep(app));
+            setValue("source", "");
+          }}
         />
-        {sources.length > 0 && (
-          <AddressResult
-            type={AddressType.source}
-            data={sources}
-            handleClick={(bdNm: string, address: string) => {
-              setValue("source", bdNm);
-              setSources([]);
-              app.source = { ...app.source, bdNm, address };
-              setApp(cloneDeep(app));
-            }}
-          />
-        )}
+        <AddressResult
+          type={AddressType.source}
+          data={sources}
+          handleClick={() => {
+            setValue("source", app.source.name);
+            setSources([]);
+          }}
+        />
         <Input
           register={register("destination")}
           watch={watch("destination")}
-          setValue={setValue}
           placeholder="도착지 검색"
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            handleChangeInput(AddressType.destination, event)
-          }
+          onFocus={() => (app.destination.isSearch = true)}
+          onClear={() => {
+            app.destination = { ...app.destination, name: "", address: "", location: { lat: 0, lng: 0 } };
+            setApp(cloneDeep(app));
+            setValue("destination", "");
+          }}
         />
         {destinations.length > 0 && (
           <AddressResult
             type={AddressType.destination}
             data={destinations}
-            handleClick={(bdNm: string, address: string) => {
-              setValue("destination", bdNm);
+            handleClick={() => {
+              setValue("destination", app.destination.name);
               setDestinations([]);
-              app.destination = { ...app.destination, bdNm, address };
-              setApp(cloneDeep(app));
             }}
           />
         )}
