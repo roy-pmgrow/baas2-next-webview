@@ -5,7 +5,7 @@ interface Props {
 }
 
 const Section: FC<Props> = ({ children }) => {
-  return <div className="flex-col min-h-screen pb-[2rem] px-[1rem] pt-[1rem]">{children}</div>;
+  return <div className="flex-col min-h-screen pb-[2rem] px-[1rem]">{children}</div>;
 };
 
 export default Section;

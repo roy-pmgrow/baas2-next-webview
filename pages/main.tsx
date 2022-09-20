@@ -39,13 +39,8 @@ const MainPage: NextPage = () => {
     else if (type === AddressType.end) setEndAddressData(filter);
   };
 
-  const handleSimulatedDriving = () => {
-    addressApi
-      .kakaoNavi("127.016990589902, 37.2798597422117", "126.951315733584, 37.2226490713383")
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {});
+  const handlePreview = () => {
+    push("/preview");
   };
 
   useEffect(() => {
@@ -77,7 +72,7 @@ const MainPage: NextPage = () => {
   return (
     <Section>
       <Swiper
-        className="relative -top-3"
+        className="relative"
         spaceBetween={50}
         slidesPerView={1}
         onSlideChange={() => console.log("slide change")}
@@ -121,13 +116,11 @@ const MainPage: NextPage = () => {
           setValue={setValue}
           placeholder="출발지 검색"
         />
-        <input {...register("startRoadAddr")} className="hidden" />
         {startAddressData.length > 0 && (
           <AddressResult
             data={startAddressData}
-            handleClick={({ bdNm, roadAddr }) => {
+            handleClick={(bdNm: string) => {
               setValue("startAddress", bdNm);
-              setValue("startRoadAddr", roadAddr);
               setStartAddressData([]);
               setIsSeach(true);
             }}
@@ -139,13 +132,11 @@ const MainPage: NextPage = () => {
           setValue={setValue}
           placeholder="도착지 검색"
         />
-        <input {...register("endRoadAddr")} className="hidden" />
         {endAddressData.length > 0 && (
           <AddressResult
             data={endAddressData}
-            handleClick={({ bdNm, roadAddr }) => {
+            handleClick={(bdNm: string) => {
               setValue("endAddress", bdNm);
-              setValue("endRoadAddr", roadAddr);
               setEndAddressData([]);
               setIsSeach(true);
             }}
@@ -153,7 +144,7 @@ const MainPage: NextPage = () => {
         )}
       </article>
       <div className="flex space-x-[1rem] mt-[3rem]">
-        <Button className="bg-amber-500" onClick={handleSimulatedDriving}>
+        <Button className="bg-amber-500" onClick={handlePreview}>
           자동 모의주행
         </Button>
         <Button>시뮬레이션</Button>
