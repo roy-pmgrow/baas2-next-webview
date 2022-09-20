@@ -21,18 +21,7 @@ const handleResponse = async (response: Response) => {
       return Promise.reject(error);
     }
     const data = text && JSON.parse(text);
-    if (data["comm"]) {
-      const { rs_cd, rs_msg } = data.comm;
-      if (rs_cd !== "00") {
-        const error = rs_msg;
-        return Promise.reject(error);
-      }
-    } else if (data["results"]) {
-      const { results } = data;
-      return results.juso;
-    }
-
-    return data.data;
+    return data;
   });
 };
 

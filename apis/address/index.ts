@@ -25,6 +25,15 @@ const addressApi = {
   kakaoNavi(origin: string, destination: string) {
     return httpRequestKakao.get(`/v1/directions?origin=${origin}&destination=${destination}`);
   },
+
+  /**
+   * 카카오맵 키워드 검색 API
+   *
+   * @param keyword 위치 키워드
+   */
+  kakaoMap(keyword: string) {
+    return httpRequestKakao.get(`/v2/local/search/keyword.json?query=${keyword}&page=1`);
+  },
 };
 
 export default addressApi;
