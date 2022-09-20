@@ -24,4 +24,6 @@ export interface ResponseEV {
 export interface ResponseAddress {
   bdNm: string;
   roadAddr: string;
+  roadAddrPart1: string;
+  roadAddrPart2: string;
 }
