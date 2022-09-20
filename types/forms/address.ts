@@ -1,4 +1,4 @@
 export interface AddressForm {
-  startAddress: string;
-  endAddress: string;
+  source: string;
+  destination: string;
 }
