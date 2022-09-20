@@ -1,24 +1,26 @@
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { HiLocationMarker } from "react-icons/hi";
+import { AddressType } from "types/enum";
 import { ResponseAddress } from "types/response";
 
 interface Props {
+  type: AddressType;
   data: ResponseAddress[];
   handleClick: (bdNm: string) => void;
 }
 
-const AddressResult: FC<Props> = ({ data, handleClick }) => {
+const AddressResult: FC<Props> = ({ type, data, handleClick }) => {
   const { push } = useRouter();
-  const handleMap = (keyword: string, address: string) => {
+  const handleMap = (bdNm: string, address: string) => {
     push({
-      pathname: "/map",
-      query: { keyword, address },
+      pathname: "/preview",
+      query: { type, bdNm, address },
     });
   };
 
   return (
-    <section className="h-[18rem] overflow-y-auto rounded-lg">
+    <section className="max-h-[18rem] overflow-y-auto rounded-lg">
       <span className="text-sm font-semibold ml-2 mb-1">검색 결과</span>
       <div className="bg-gray-100 rounded-lg select-none">
         {data.map(({ bdNm, roadAddr, roadAddrPart1, roadAddrPart2 }: ResponseAddress) => (
