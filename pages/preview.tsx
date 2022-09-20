@@ -12,7 +12,9 @@ import { AddressType } from "types/enum";
 
 const PreviewPage: NextPage = () => {
   const { query, back } = useRouter();
-  const { type, bdNm, address } = query;
+  const { type } = query;
+  const bdNm = query.bdNm as string;
+  const address = query.address as string;
 
   const [app, setApp] = useAtom(appAtom);
 
@@ -20,19 +22,9 @@ const PreviewPage: NextPage = () => {
   const [lng, setLng] = useState<number>(0);
 
   const handleSelected = () => {
-    const info = {
-      bdNm: bdNm as string,
-      address: address as string,
-      location: {
-        lat,
-        lng,
-      },
-    };
-    if (type === AddressType.source) {
-      app.source = info;
-    } else if (type === AddressType.destination) {
-      app.destination = info;
-    }
+    if (type === AddressType.source) app.source = { ...app.source, bdNm, address, location: { lat, lng } };
+    else if (type === AddressType.destination)
+      app.destination = { ...app.destination, bdNm, address, location: { lat, lng } };
     setApp(cloneDeep(app));
     back();
   };

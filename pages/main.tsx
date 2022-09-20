@@ -5,6 +5,7 @@ import Input from "components/Forms/Input";
 import useQueryMyEvList from "hooks/queries/useQueryMyEvList";
 import { useAtom } from "jotai";
 import Section from "layouts/Section";
+import cloneDeep from "lodash.clonedeep";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -19,7 +20,7 @@ import { AddressForm } from "types/forms/address";
 import { ResponseAddress, ResponseEV } from "types/response";
 
 const MainPage: NextPage = () => {
-  const [app] = useAtom(appAtom);
+  const [app, setApp] = useAtom(appAtom);
   const { register, watch, setValue } = useForm<AddressForm>();
   const { push } = useRouter();
   const { data } = useQueryMyEvList();
@@ -105,6 +106,7 @@ const MainPage: NextPage = () => {
       </Swiper>
       <article className="flex flex-col space-y-[1rem]">
         <Input
+          type={AddressType.source}
           register={register("source")}
           watch={watch("source")}
           setValue={setValue}
@@ -115,9 +117,11 @@ const MainPage: NextPage = () => {
           <AddressResult
             type={AddressType.source}
             data={sources}
-            handleClick={(bdNm: string) => {
+            handleClick={(bdNm: string, address: string) => {
               setValue("source", bdNm);
               setSources([]);
+              app.source = { ...app.source, bdNm, address };
+              setApp(cloneDeep(app));
             }}
           />
         )}
@@ -134,9 +138,11 @@ const MainPage: NextPage = () => {
           <AddressResult
             type={AddressType.destination}
             data={destinations}
-            handleClick={(bdNm: string) => {
+            handleClick={(bdNm: string, address: string) => {
               setValue("destination", bdNm);
               setDestinations([]);
+              app.destination = { ...app.destination, bdNm, address };
+              setApp(cloneDeep(app));
             }}
           />
         )}

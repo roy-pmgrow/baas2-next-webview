@@ -7,7 +7,7 @@ import { ResponseAddress } from "types/response";
 interface Props {
   type: AddressType;
   data: ResponseAddress[];
-  handleClick: (bdNm: string) => void;
+  handleClick: (bdNm: string, address: string) => void;
 }
 
 const AddressResult: FC<Props> = ({ type, data, handleClick }) => {
@@ -23,17 +23,16 @@ const AddressResult: FC<Props> = ({ type, data, handleClick }) => {
     <section className="max-h-[18rem] overflow-y-auto rounded-lg">
       <span className="text-sm font-semibold ml-2 mb-1">검색 결과</span>
       <div className="bg-gray-100 rounded-lg select-none">
-        {data.map(({ bdNm, roadAddr, roadAddrPart1, roadAddrPart2 }: ResponseAddress) => (
+        {data.map(({ bdNm, roadAddr, roadAddrPart1 }: ResponseAddress) => (
           <div
             key={roadAddr}
             className="p-3 text-sm text-gray-700 flex items-center justify-between hover:bg-gray-200"
           >
-            <div className="flex mr-2" onClick={() => handleClick(bdNm)}>
+            <div className="flex mr-2" onClick={() => handleClick(bdNm, roadAddrPart1)}>
               <HiLocationMarker className="text-[1.5rem] mr-2" />
               <div className="flex flex-col">
                 <span className="text-sm font-semibold">{bdNm}</span>
                 <span className="text-xs text-gray-500">{roadAddrPart1}</span>
-                <span className="text-xs text-gray-500">{roadAddrPart2}</span>
               </div>
             </div>
             <button
