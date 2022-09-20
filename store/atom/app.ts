@@ -1,10 +1,11 @@
 export interface Info {
-  bdNm: string;
+  name: string;
   address: string;
   location: {
     lat: number;
     lng: number;
   };
+  isSearch: boolean;
 }
 
 export interface AppAtom {
@@ -14,19 +15,21 @@ export interface AppAtom {
 
 export const app: AppAtom = {
   source: {
-    bdNm: "",
+    name: "",
     address: "",
     location: {
       lat: 0,
       lng: 0,
     },
+    isSearch: false,
   },
   destination: {
-    bdNm: "",
+    name: "",
     address: "",
     location: {
       lat: 0,
       lng: 0,
     },
+    isSearch: false,
   },
 };
