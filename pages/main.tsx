@@ -16,16 +16,16 @@ import { AddressForm } from "types/forms/address";
 import { ResponseAddress, ResponseEV } from "types/response";
 
 export const enum AddressType {
-  start = "Start",
-  end = "End",
+  source = "Source",
+  destination = "Destination",
 }
 
 const MainPage: NextPage = () => {
   const { register, watch, setValue } = useForm<AddressForm>();
   const { push } = useRouter();
   const { data } = useQueryMyEvList();
-  const [startAddressData, setStartAddressData] = useState<ResponseAddress[]>([]);
-  const [endAddressData, setEndAddressData] = useState<ResponseAddress[]>([]);
+  const [sources, setSources] = useState<ResponseAddress[]>([]);
+  const [destinations, setDestinations] = useState<ResponseAddress[]>([]);
   const [isSearch, setIsSeach] = useState<boolean>(false);
 
   const handleAdd = () => {
@@ -34,9 +34,11 @@ const MainPage: NextPage = () => {
 
   const searchAddress = async (type: AddressType, keyword: string) => {
     const data = await addressApi.search(keyword);
-    const filter = data.filter((item: ResponseAddress) => item.bdNm !== "");
-    if (type === AddressType.start) setStartAddressData(filter);
-    else if (type === AddressType.end) setEndAddressData(filter);
+    if (data) {
+      const filter = data.filter(({ bdNm }: ResponseAddress) => bdNm !== "");
+      if (type === AddressType.source) setSources(filter);
+      else if (type === AddressType.destination) setDestinations(filter);
+    }
   };
 
   const handlePreview = () => {
@@ -52,22 +54,22 @@ const MainPage: NextPage = () => {
   useEffect(() => {
     if (!isSearch) {
       // 2글자 이상인 경우
-      const keyword = watch("startAddress");
-      keyword.length >= 2 ? searchAddress(AddressType.start, keyword) : setStartAddressData([]);
-      setEndAddressData([]);
+      const keyword = watch("source");
+      keyword.length >= 2 ? searchAddress(AddressType.source, keyword) : setSources([]);
+      setDestinations([]);
     }
     setIsSeach(false);
-  }, [watch("startAddress")]);
+  }, [watch("source")]);
 
   useEffect(() => {
     if (!isSearch) {
       // 2글자 이상인 경우
-      const keyword = watch("endAddress");
-      keyword.length >= 2 ? searchAddress(AddressType.end, keyword) : setEndAddressData([]);
-      setStartAddressData([]);
+      const keyword = watch("destination");
+      keyword.length >= 2 ? searchAddress(AddressType.destination, keyword) : setDestinations([]);
+      setSources([]);
     }
     setIsSeach(false);
-  }, [watch("endAddress")]);
+  }, [watch("destination")]);
 
   return (
     <Section>
@@ -111,33 +113,33 @@ const MainPage: NextPage = () => {
       </Swiper>
       <article className="flex flex-col space-y-[1rem]">
         <Input
-          register={register("startAddress")}
-          watch={watch("startAddress")}
+          register={register("source")}
+          watch={watch("source")}
           setValue={setValue}
           placeholder="출발지 검색"
         />
-        {startAddressData.length > 0 && (
+        {sources.length > 0 && (
           <AddressResult
-            data={startAddressData}
+            data={sources}
             handleClick={(bdNm: string) => {
-              setValue("startAddress", bdNm);
-              setStartAddressData([]);
+              setValue("source", bdNm);
+              setSources([]);
               setIsSeach(true);
             }}
           />
         )}
         <Input
-          register={register("endAddress")}
-          watch={watch("endAddress")}
+          register={register("destination")}
+          watch={watch("destination")}
           setValue={setValue}
           placeholder="도착지 검색"
         />
-        {endAddressData.length > 0 && (
+        {destinations.length > 0 && (
           <AddressResult
-            data={endAddressData}
+            data={destinations}
             handleClick={(bdNm: string) => {
-              setValue("endAddress", bdNm);
-              setEndAddressData([]);
+              setValue("destination", bdNm);
+              setDestinations([]);
               setIsSeach(true);
             }}
           />

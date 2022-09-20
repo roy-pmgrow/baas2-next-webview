@@ -10,10 +10,10 @@ interface Props {
 
 const AddressResult: FC<Props> = ({ data, handleClick }) => {
   const { push } = useRouter();
-  const handleMap = (keyword: string) => {
+  const handleMap = (keyword: string, address: string) => {
     push({
       pathname: "/map",
-      query: { keyword },
+      query: { keyword, address },
     });
   };
 
@@ -25,9 +25,8 @@ const AddressResult: FC<Props> = ({ data, handleClick }) => {
           <div
             key={roadAddr}
             className="p-3 text-sm text-gray-700 flex items-center justify-between hover:bg-gray-200"
-            onClick={() => handleClick(bdNm)}
           >
-            <div className="flex mr-2">
+            <div className="flex mr-2" onClick={() => handleClick(bdNm)}>
               <HiLocationMarker className="text-[1.5rem] mr-2" />
               <div className="flex flex-col">
                 <span className="text-sm font-semibold">{bdNm}</span>
@@ -37,7 +36,7 @@ const AddressResult: FC<Props> = ({ data, handleClick }) => {
             </div>
             <button
               className="min-w-[5rem] bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded"
-              onClick={() => handleMap(bdNm)}
+              onClick={() => handleMap(bdNm, roadAddrPart1)}
             >
               위치 확인
             </button>

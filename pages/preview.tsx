@@ -57,7 +57,7 @@ const PreviewPage: NextPage = () => {
           <MapMarker
             position={{ lat: 37.2798597422117, lng: 127.016990589902 }}
             image={{
-              src: "/images/map/marker-start.png",
+              src: "/images/map/marker-source.png",
               size: {
                 width: 30,
                 height: 43,
@@ -67,7 +67,7 @@ const PreviewPage: NextPage = () => {
           <MapMarker
             position={{ lat: 37.1575880574755, lng: 127.11377087536 }}
             image={{
-              src: "/images/map/marker-end.png",
+              src: "/images/map/marker-destination.png",
               size: {
                 width: 30,
                 height: 43,
