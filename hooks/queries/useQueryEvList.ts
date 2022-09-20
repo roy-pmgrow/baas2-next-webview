@@ -21,6 +21,9 @@ const useQueryEvList = () => {
   };
 
   const setFilter = (data: ResponseEV[]) => {
+    if (ev.manufacturer.current === "") {
+      ev.manufacturer.current = data[0].ev_mnfct;
+    }
     const filter = data.filter(({ ev_mnfct }: ResponseEV) => ev_mnfct === ev.manufacturer.current);
     setModel(filter);
     setFilterData(filter);
