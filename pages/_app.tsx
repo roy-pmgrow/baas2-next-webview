@@ -1,6 +1,5 @@
 import DefaultDataSet from "components/DefaultDataSet";
 import Header from "components/Header";
-import Modal from "components/Modal";
 import { Provider } from "jotai";
 import type { AppProps } from "next/app";
 import Script from "next/script";
@@ -43,7 +42,6 @@ function MyApp({ Component, pageProps }: AppProps) {
             <DefaultDataSet />
             <Header />
             <Component {...pageProps} />
-            <Modal />
           </div>
         </QueryClientProvider>
       </Provider>
