@@ -3,73 +3,65 @@ import AddressResult from "components/AddressResult";
 import Button from "components/Forms/Button";
 import Input from "components/Forms/Input";
 import useQueryMyEvList from "hooks/queries/useQueryMyEvList";
+import { useAtom } from "jotai";
 import Section from "layouts/Section";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaPlus } from "react-icons/fa";
+import { appAtom } from "store";
 import { Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { AddressType } from "types/enum";
 import { AddressForm } from "types/forms/address";
 import { ResponseAddress, ResponseEV } from "types/response";
 
-export const enum AddressType {
-  source = "Source",
-  destination = "Destination",
-}
-
 const MainPage: NextPage = () => {
+  const [app] = useAtom(appAtom);
   const { register, watch, setValue } = useForm<AddressForm>();
   const { push } = useRouter();
   const { data } = useQueryMyEvList();
   const [sources, setSources] = useState<ResponseAddress[]>([]);
   const [destinations, setDestinations] = useState<ResponseAddress[]>([]);
-  const [isSearch, setIsSeach] = useState<boolean>(false);
 
   const handleAdd = () => {
     push("/ev/add");
   };
 
   const searchAddress = async (type: AddressType, keyword: string) => {
+    if (keyword === "") {
+      setSources([]);
+      setDestinations([]);
+      return;
+    }
+
     const data = await addressApi.search(keyword);
     if (data) {
       const filter = data.filter(({ bdNm }: ResponseAddress) => bdNm !== "");
-      if (type === AddressType.source) setSources(filter);
-      else if (type === AddressType.destination) setDestinations(filter);
+      if (type === AddressType.source) {
+        setSources(filter);
+        setDestinations([]);
+      } else if (type === AddressType.destination) {
+        setSources([]);
+        setDestinations(filter);
+      }
     }
   };
 
   const handlePreview = () => {
-    push("/preview");
+    push("/simulatedDriving");
+  };
+
+  const handleChangeInput = (type: AddressType, event: ChangeEvent<HTMLInputElement>) => {
+    searchAddress(type, event.currentTarget.value);
   };
 
   useEffect(() => {
-    if (data) {
-      console.log(data);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (!isSearch) {
-      // 2글자 이상인 경우
-      const keyword = watch("source");
-      keyword.length >= 2 ? searchAddress(AddressType.source, keyword) : setSources([]);
-      setDestinations([]);
-    }
-    setIsSeach(false);
-  }, [watch("source")]);
-
-  useEffect(() => {
-    if (!isSearch) {
-      // 2글자 이상인 경우
-      const keyword = watch("destination");
-      keyword.length >= 2 ? searchAddress(AddressType.destination, keyword) : setDestinations([]);
-      setSources([]);
-    }
-    setIsSeach(false);
-  }, [watch("destination")]);
+    setValue("source", app.source.bdNm);
+    setValue("destination", app.destination.bdNm);
+  }, []);
 
   return (
     <Section>
@@ -117,14 +109,15 @@ const MainPage: NextPage = () => {
           watch={watch("source")}
           setValue={setValue}
           placeholder="출발지 검색"
+          onChange={(event: ChangeEvent<HTMLInputElement>) => handleChangeInput(AddressType.source, event)}
         />
         {sources.length > 0 && (
           <AddressResult
+            type={AddressType.source}
             data={sources}
             handleClick={(bdNm: string) => {
               setValue("source", bdNm);
               setSources([]);
-              setIsSeach(true);
             }}
           />
         )}
@@ -133,14 +126,17 @@ const MainPage: NextPage = () => {
           watch={watch("destination")}
           setValue={setValue}
           placeholder="도착지 검색"
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            handleChangeInput(AddressType.destination, event)
+          }
         />
         {destinations.length > 0 && (
           <AddressResult
+            type={AddressType.destination}
             data={destinations}
             handleClick={(bdNm: string) => {
               setValue("destination", bdNm);
               setDestinations([]);
-              setIsSeach(true);
             }}
           />
         )}
