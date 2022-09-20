@@ -16,7 +16,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-[999]">
+      <header className="sticky top-0 z-[10]">
         <div
           className={`flex justify-between bg-white p-[1rem] 
         ${scrollPosition >= 20 && "shadow"} `}
