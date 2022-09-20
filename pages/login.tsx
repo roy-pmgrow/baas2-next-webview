@@ -2,6 +2,8 @@ import userApi from "apis/user";
 import CheckBox from "components/Forms/Checkbox";
 import DisabledButton from "components/Forms/DisabledButton";
 import IconInput from "components/Forms/IconInput";
+import Modal from "components/Modal";
+import DefaultModal from "components/Modal/DefaultModal";
 import { useAtom } from "jotai";
 import jwtDecode from "jwt-decode";
 import Section from "layouts/Section";
@@ -38,7 +40,7 @@ const LoginPage: NextPage = () => {
       localStorage.setItem("token", token);
       replace("/main");
     } catch (error) {
-      modal.message = error as string;
+      modal.showMessage(error as string);
       setModal(cloneDeep(modal));
     }
   };
@@ -49,6 +51,11 @@ const LoginPage: NextPage = () => {
 
   const onInvalid = (errors: FieldErrors) => {
     console.log(errors);
+  };
+
+  const handleClose = () => {
+    modal.hide();
+    setModal(cloneDeep(modal));
   };
 
   return (
@@ -97,6 +104,11 @@ const LoginPage: NextPage = () => {
           </Link>
         </div>
       </form>
+      {modal.toggle && (
+        <Modal handleClose={handleClose}>
+          <DefaultModal message={modal.message} />
+        </Modal>
+      )}
     </Section>
   );
 };

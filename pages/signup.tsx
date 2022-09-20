@@ -2,6 +2,8 @@ import userApi from "apis/user";
 import BottomButton from "components/Forms/BottomButton";
 import CheckBox from "components/Forms/Checkbox";
 import IconInput from "components/Forms/IconInput";
+import Modal from "components/Modal";
+import DefaultModal from "components/Modal/DefaultModal";
 import { useAtom } from "jotai";
 import Section from "layouts/Section";
 import cloneDeep from "lodash.clonedeep";
@@ -44,9 +46,14 @@ const SignupPage: NextPage = () => {
   };
 
   const onInvalid = (errors: FieldErrors) => {
-    if (errors["loginId"]) modal.message = errors["loginId"]?.message as string;
-    else if (errors["password"]) modal.message = errors["password"]?.message as string;
-    else if (errors["confirmPassword"]) modal.message = errors["confirmPassword"]?.message as string;
+    if (errors["loginId"]) modal.showMessage(errors["loginId"]?.message as string);
+    else if (errors["password"]) modal.showMessage(errors["password"]?.message as string);
+    else if (errors["confirmPassword"]) modal.showMessage(errors["confirmPassword"]?.message as string);
+    setModal(cloneDeep(modal));
+  };
+
+  const handleClose = () => {
+    modal.hide();
     setModal(cloneDeep(modal));
   };
 
@@ -110,6 +117,11 @@ const SignupPage: NextPage = () => {
 
         <BottomButton type="submit">가입 신청</BottomButton>
       </form>
+      {modal.toggle && (
+        <Modal handleClose={handleClose}>
+          <DefaultModal message={modal.message} />
+        </Modal>
+      )}
     </Section>
   );
 };
