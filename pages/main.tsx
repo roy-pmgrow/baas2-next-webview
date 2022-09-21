@@ -19,6 +19,11 @@ import { AddressType } from "types/enum";
 import { AddressForm } from "types/forms/address";
 import { ResponseAddress, ResponseEV } from "types/response";
 
+interface Location {
+  lat: string;
+  lng: string;
+}
+
 const MainPage: NextPage = () => {
   const [app, setApp] = useAtom(appAtom);
   const { register, watch, setValue } = useForm<AddressForm>({
@@ -53,7 +58,15 @@ const MainPage: NextPage = () => {
   };
 
   const handlePreview = () => {
-    push("/simulatedDriving");
+    push({
+      pathname: "/simulatedDriving",
+      query: {
+        slat: app.source.location.lat,
+        slng: app.source.location.lng,
+        dlat: app.destination.location.lat,
+        dlng: app.destination.location.lng,
+      },
+    });
   };
 
   useEffect(() => {
